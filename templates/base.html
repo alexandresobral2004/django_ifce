@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <title>{% block title %} Aluno Online{% endblock title %}</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">Aluno Online</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07"
+        aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample07">
+        
+        <ul class="navbar-nav mr-auto">
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">Alunos</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown07">
+              <a class="dropdown-item" href="{% url 'aluno:add_aluno' %}">Novo Aluno</a>
+              <a class="dropdown-item" href="{% url 'aluno:lista_alunos' %}">Listar Alunos</a>
+
+            </div>
+          </li>
+        
+         
+          {% endif %}
+
+
+        </ul>
+        
+        <form class="form-inline my-2 my-md-0" action="" style="margin-right:10px" autocomplete="off">
+          <input class="form-control" name="query" type="text" placeholder="Digite o termo da busca" aria-label="Search"
+            style="margin-right:10px">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+        
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'usuario:user_logout' %}">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'usuario:user_login' %}">Login</a>
+           
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="{% url 'usuario:add_user' %}">Novo Usuário</a>
+          </li>
+          {% endif %}
+        </ul>
+        
+
+
+
+
+      </div>
+    </div>
+  </nav>
+
+  {% block body %}
+
+
+  {% endblock body %}
+
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/select2.min.js' %}"></script>
+  <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+  <script src="{% static 'js/mask.js' %}"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+    $(document).on('click', '.confirm-delete', function () {
+      $('#confirmDeleteModal').attr('caller-id', $(this).attr('id'));
+    });
+    $(document).on('click', '#confirmDeleteButtonModal', function () {
+      var caller = $('#confirmDeleteButtonModal').closest('.modal').attr('caller-id');
+      window.location = $('#'.concat(caller)).attr('href');
+    });
+    $(function () {
+      $('#id_end_date').datepicker(
+        {
+          dateFormat: "dd/mm/yy",
+          dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+          monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+        }
+      );
+    });
+    $(document).ready(function () {
+      $('#id_category').select2();
+    });
+  </script>
+</body>
+
+</html>
